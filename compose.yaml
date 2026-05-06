@@ -1,0 +1,7 @@
+﻿services:
+  csharpkatas:
+    image: csharpkatas
+    build:
+      context: .
+      dockerfile: CSharpKatas/Dockerfile
+
