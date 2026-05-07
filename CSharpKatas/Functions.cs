@@ -37,4 +37,38 @@ public class Functions
         var x = Enumerable.Range(2, n).Where(x => x % 2 == 0).Where(is_prime);
         return x;
     }
+
+
+    private static Dictionary<char, char> _toClose = new Dictionary<char, char>()
+    {
+        ['['] = ']',
+        ['{'] = '}',
+        ['('] = ')'
+    };
+    public static bool IsBalanced(string s)
+    {
+        var closeSymbols = new HashSet<char>(_toClose.Values);
+        
+        var stack = new Stack<char>();
+        foreach (var c in s)
+        {
+            char closingBracket;
+            if (_toClose.TryGetValue(c, out closingBracket))
+            {
+                stack.Push(closingBracket);
+            }
+            else if (closeSymbols.Contains(c))
+            {
+                if (stack.Count == 0)
+                    return false;
+
+                if (c != stack.Peek())
+                    return false;
+
+                stack.Pop();
+            }
+        }
+        
+        return stack.Count == 0;
+    }
 }
